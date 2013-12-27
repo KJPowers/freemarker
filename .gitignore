@@ -4,4 +4,4 @@
 /build.properties
 /archive/
 
-src/manual/book.xml~
+*.*~

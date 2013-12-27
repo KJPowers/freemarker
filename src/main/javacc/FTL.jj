@@ -135,11 +135,15 @@ public class FMParser {
       this(null, new StringReader(template), true, true);
   }
 
-  void setTemplate(Template template)  {      this.template = template;
+  void setTemplate(Template template)
+  {
+      this.template = template;
   }
 
-  Template getTemplate()  {
-      return template;  }
+  Template getTemplate()
+  {
+      return template;
+  }
 
  /**
   * Don't use it, unless you are developing FreeMarker itself.
@@ -247,7 +251,8 @@ public class FMParser {
   private Expression escapedExpression(Expression exp) {
       if(!escapes.isEmpty()) {
           return ((EscapeBlock)escapes.getFirst()).doEscape(exp);
-      } else {          return exp;
+      } else {
+          return exp;
       }
   }
   
@@ -350,10 +355,14 @@ TOKEN_MGR_DECLS :
 		 inInvocation;
  int incompatibleImprovements;
 
- void setParser(FMParser parser) {     this.parser = parser;
+ void setParser(FMParser parser)
+ {
+     this.parser = parser;
  }
 
- Template getTemplate() {	return parser != null ? parser.getTemplate() : null;
+ Template getTemplate()
+ {
+	return parser != null ? parser.getTemplate() : null;
  }
   
  // This method checks if we are in a strict mode where all
@@ -616,9 +625,11 @@ TOKEN:
     {
         if (!directiveSyntaxEstablished && incompatibleImprovements < 2003019) {
             matchedToken.kind = PRINTABLE_CHARS;
-        } else {			char firstChar = matchedToken.image.charAt(0);
+        } else {
+			char firstChar = matchedToken.image.charAt(0);
 			
-			if (!directiveSyntaxEstablished && autodetectTagSyntax) {			    squBracTagSyntax = (firstChar == '[');
+			if (!directiveSyntaxEstablished && autodetectTagSyntax) {
+			    squBracTagSyntax = (firstChar == '[');
 			    directiveSyntaxEstablished = true;
 			}
 			
@@ -632,20 +643,27 @@ TOKEN:
 			    s = s.substring(index);
 			    
 			    String tip = null;
-			    if (!s.toLowerCase().equals(s))			    {
-			        tip = "Directive names are all-lower-case.";			    }
-			    else if (s.equals("#set"))			    {			        tip = "Use #assign or #local or #global, depending on the intented scope (#assign is template-scope).";
+			    if (!s.toLowerCase().equals(s))
+			    {
+			        tip = "Directive names are all-lower-case.";
+			    }
+			    else if (s.equals("#set"))
+			    {
+			        tip = "Use #assign or #local or #global, depending on the intented scope (#assign is template-scope).";
 			    }
 			    else if (s.equals("#else_if")) tip = "Use #elseif.";
 			    else if (s.equals("#no_escape")) tip = "Use #noescape instead.";
 			    else if (s.equals("#method")) tip = "Use #function instead.";
 			    else if (s.equals("#head") || s.equals("#template") || s.equals("#fm")) tip = "You may meant #ftl.";
 			    else if (s.equals("#try") || s.equals("#atempt")) tip = "You may meant #attempt.";
-			    else if (s.equals("#for") || s.equals("#each") || s.equals("#iterate") || s.equals("#iterator"))			    {			        tip = "You may meant #list "
+			    else if (s.equals("#for") || s.equals("#each") || s.equals("#iterate") || s.equals("#iterator"))
+			    {
+			        tip = "You may meant #list "
 			               + "(http://freemarker.org/docs/ref_directive_list.html).";
 			    }
 			    else
-			    {			        tip = "Help (latest version): "
+			    {
+			        tip = "Help (latest version): "
 			      		   + "http://freemarker.org/docs/ref_directive_alphaidx.html; "
 			      		   + "you're using FreeMarker " + Configuration.getVersion() +".";
 			    }
@@ -759,7 +777,7 @@ TOKEN:
   |
   <PERCENT : "%">
   |
-  <AND : "&" | "&&" >
+  <AND : "&" | "&&" | "&amp;" | "&amp;&amp;" | "&&amp;" | "&amp;&">
   |
   <OR : "|" | "||">
   |
@@ -809,9 +827,11 @@ TOKEN:
   |
   < ID: <LETTER> (<LETTER>|<DIGIT>)* >
   |
-  < OPEN_MISPLACED_INTERPOLATION : "${" | "#{" >  {
+  < OPEN_MISPLACED_INTERPOLATION : "${" | "#{" >
+  {
     if ("".length() == 0) {  // prevents unreachabe "break" compilation error in generated Java
-      char c = matchedToken.image.charAt(0);	  throw new TokenMgrError(
+      char c = matchedToken.image.charAt(0);
+	  throw new TokenMgrError(
 	      "You can't use \"" + c + "{\" here as you are already in FreeMarker-expression-mode. Thus, instead "
 	      + "of " + c + "{myExpression}, just write myExpression. "
 	      + "(" + c + "{...} is only needed where otherwise static text is expected, i.e, outside FreeMarker tags and "
